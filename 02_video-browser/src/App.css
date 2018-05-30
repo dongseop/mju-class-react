@@ -1,0 +1,7 @@
+.video-list-item {
+  cursor: pointer;
+}
+
+.video-list-item:hover {
+  background-color: gold;
+}

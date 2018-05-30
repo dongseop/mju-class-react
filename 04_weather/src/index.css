@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.search-bar button .fa-spin {display: none;}
+.search-bar button span {display: inline-block;}
+.search-bar button.loading .fa-spin {display: inline-block;}
+.search-bar button.loading span {display: none;}
+
+td, th {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+svg {
+  height: 150px;
+}
+.map {
+  height: 180px;
+  width: 250px;
+}
+
