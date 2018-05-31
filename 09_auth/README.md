@@ -5,24 +5,33 @@
 - Sequelize-cli 설치: https://github.com/sequelize/cli
 - Express generator 설치
 - PostgreSQL 설치
+- Nodemon 설치: yarn add global nodemon
 
+### 이 repository를 그냥 실행만 하려면?
+```
+$ cd server
 
+$ yarn
 
+$ psql postgres
+  >  CREATE ROLE dbuser1 WITH LOGIN CREATEDB PASSWORD 'dbuserpwd1';
+
+$ sequelize db:create
+$ sequelize db:migrate
+$ sequelize db:seed:all
+
+```
+
+### 이 repository처럼 새로운 프로젝트를 단계별로 제작한다면
 1. DB 생성: psql을 이용하여 새로운 사용자와 DB를 만든다.
 
    ```sh
    $ psql postgres -U postgres
-   # CREATE ROLE dbuser1 WITH LOGIN CREATEDB PASSWORD 'dbuserpwd1’;
+   # CREATE ROLE dbuser1 WITH LOGIN CREATEDB PASSWORD 'dbuserpwd1';
    # \q
-   
-   $ psql postgres -U dbuser1
-   # CREATE DATABASE authsample_development;
-   # GRANT ALL PRIVILEGES ON DATABASE authsample_development TO dbuser1;
-   # CREATE DATABASE authsample_production;
-   # GRANT ALL PRIVILEGES ON DATABASE authsample_production TO dbuser1;
-   # CREATE DATABASE authsample_test;
-   # GRANT ALL PRIVILEGES ON DATABASE authsample_test TO dbuser1;
-   # \l
+
+   -- 위 명령이 안되면 다음 명령을 사용하세요.
+   $ psql postgres         (MacOS의 경우 postgres role없이 본인 계정으로 생성됨)
    
    ```
 
@@ -73,6 +82,10 @@
    
    ```
 
+5. Sequelize를 이용하여 DB를 생성하자.
+  ```sh
+  $ sequelize db:create
+  ```
 5. Express-oauth-server package 설치: https://github.com/oauthjs/express-oauth-server
 
    ```bash
@@ -95,9 +108,9 @@
 
 8. Sequelize-cli를 이용하여 OAuthToken과 OAuthRefreshToken 모델을 생성하자.
    ```sh 
-   sequelize model:create --name OAuthToken --attributes accessToken:string,expiresAt:string,scope:string,clientId:string,userId:integer
+   sequelize model:create --name OAuthToken --attributes accessToken:string,expiresAt:date,scope:string,clientId:string,userId:integer
    
-   sequelize model:create --name OAuthRefreshToken --attributes refreshToken:string,expiresAt:string,scope:string,clientId:string,userId:integer
+   sequelize model:create --name OAuthRefreshToken --attributes refreshToken:string,expiresAt:date,scope:string,clientId:string,userId:integer
    ```
 
    
@@ -130,4 +143,32 @@
 15. 
 
 16. 
+
+## 실행 결과
+
+
+1. Client 생성
+![](./screenshots/screenshot0.png)
+
+
+2. 사용자 생성 
+![](./screenshots/screenshot1.png)
+
+
+3. 인증에 의해 보호되는 API를 token 없이 접속하면 HTTP 401 Unauthorized
+![](./screenshots/screenshot2.png)
+
+
+4. 토큰 생성
+![](./screenshots/screenshot3.png)
+
+
+5. 토큰을 달아서 다시 API 호출하면 성공함
+![](./screenshots/screenshot5.png)
+
+
+6. 토큰이 틀리면 API 호출 실패
+![](./screenshots/screenshot4.png)
+
+
 

@@ -8,9 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   OAuthToken.associate = function(models) {
-    // associations can be defined here
-    OAuthToken.belongsTo(models.User);
-    OAuthToken.belongsTo(models.OAuthClient, {as: 'client', foreignKey: 'clientId'});
   };
   return OAuthToken;
 };

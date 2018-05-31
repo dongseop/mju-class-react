@@ -8,9 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   OAuthRefreshToken.associate = function(models) {
-    // associations can be defined here
-    OAuthRefreshToken.belongsTo(models.User);
-    OAuthRefreshToken.belongsTo(models.OAuthClient, { as: 'client', foreignKey: 'clientId' });
   };
   return OAuthRefreshToken;
 };
