@@ -38,7 +38,7 @@ const RootStack = createBottomTabNavigator(
         let iconName;
         if (routeName === 'Profile') {
           return <Image style={{ width: 28, height: 28, borderRadius: 14 }}
-            source={{ uri: 'https://randomuser.me/api/portraits/women/17.jpg' }} />;
+            source={{ uri: 'https://avatars3.githubusercontent.com/u/6858?s=88&v=4' }} />;
         }
         if (routeName === 'Home') {
           iconName = `ios-home${focused ? '' : '-outline'}`;

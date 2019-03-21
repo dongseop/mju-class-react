@@ -44,7 +44,7 @@ export function signout() {
 export function fetchUsers() {
   return dispatch => {
     console.log(axios.defaults.headers.common);
-    axios.get(`${Config.server}/api/users`).then( response => {
+    axios.get(`https://randomuser.me/api/?gender=female&results=50`).then( response => {
       dispatch({type: 'FETCHED_USERS', payload: response.data});
     }).catch(err => {
       console.log(err.response);

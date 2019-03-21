@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 function users(state = [], action) {
   switch (action.type) {
     case 'FETCHED_USERS':
-      return action.payload;
+      return action.payload.results;
     default:
       return state;
   }

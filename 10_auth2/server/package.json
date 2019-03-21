@@ -13,7 +13,7 @@
     "express": "~4.16.0",
     "express-basic-auth": "^1.1.5",
     "express-oauth-server": "^2.0.0",
-    "http-errors": "~1.6.2",
+    "http-errors": "^1.6.3",
     "method-override": "^2.3.10",
     "morgan": "~1.9.0",
     "nanoid": "^1.0.2",

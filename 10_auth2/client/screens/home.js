@@ -4,6 +4,8 @@ import {
   Button,
   Text,
   StyleSheet,
+  FlatList,
+  Image,
   AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -29,22 +31,26 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     this.props.fetchUsers();
   }
-  renderUsers() {
-    if (this.props.users) {
-      return this.props.users.map(user => {
-        return (
-          <View style={styles.card} key={user.id}>
-            <Text>{user.username}</Text>
-          </View>
-        );
-      });
-    }
+  renderUser({item}) {
+    console.log(item);
+    return (
+      <View style={styles.card} key={item.email}>
+        <Image style={{ width: 60, height: 60, borderRadius: 30 }}
+          source={{ uri: item.picture.medium }} />; 
+        <Text style={styles.name}>{item.name.first} {item.name.last}</Text>
+      </View>
+    );
   }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.users}>
-          {this.renderUsers()}
+          <FlatList
+            refreshing={false}
+            onRefresh={() => this.props.fetchUsers()}
+            data={this.props.users}
+            renderItem={this.renderUser.bind(this)}
+          />
         </View>
       </View>
     );
@@ -78,8 +84,13 @@ const styles = StyleSheet.create({
   },
   card: {
     alignSelf: "stretch",
-    padding: 30,
+    padding: 10,
+    flexDirection: 'row',
     borderBottomWidth: 5,
     borderBottomColor: '#EEE'
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 15
   }
 });
