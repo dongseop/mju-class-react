@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 
 const VideoDetail = ({video}) => {
@@ -13,8 +14,8 @@ const VideoDetail = ({video}) => {
         </iframe>
       </div>
       <div className="details mt-3">
-        <h3>{video.snippet.title}</h3>
-        <div>{video.snippet.description}</div>
+        <h3>{_.unescape(video.snippet.title)}</h3>
+        <div>{_.unescape(video.snippet.description)}</div>
       </div>
     </div>
   );

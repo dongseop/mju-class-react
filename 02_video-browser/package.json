@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
-    "youtube-api-search": "0.0.5"
+    "youtube-api-search": "0.0.5",
+    "youtube-api-v3-search": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
