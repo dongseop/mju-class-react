@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bcrypt": "^2.0.1",
+    "bcrypt": "^3.0.5",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
@@ -15,11 +15,11 @@
     "express-oauth-server": "^2.0.0",
     "http-errors": "^1.6.3",
     "method-override": "^2.3.10",
-    "morgan": "~1.9.0",
+    "morgan": "^1.9.1",
     "nanoid": "^1.0.2",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
-    "pug": "2.0.0-beta11",
+    "pug": "^2.0.3",
     "sequelize": "^4.37.10"
   }
 }

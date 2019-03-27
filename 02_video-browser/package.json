@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "lodash": "^4.17.11",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-scripts": "^2.1.8",
     "youtube-api-search": "0.0.5",
     "youtube-api-v3-search": "^1.2.1"
   },
