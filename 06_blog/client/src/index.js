@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import {BrowserRouter} from 'react-router-dom';
-import promiseMiddleware from 'redux-promise-middleware'
+import { createPromise } from 'redux-promise-middleware'
 
 import reducers from './reducers';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 
 const composeStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware(),
-)(createStore);
+  createPromise(),
+)(createStore)
 
 ReactDOM.render((
   <Provider store={composeStoreWithMiddleware(reducers)}>
@@ -21,4 +21,4 @@ ReactDOM.render((
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'));
-registerServiceWorker();
+serviceWorker.unregister();
