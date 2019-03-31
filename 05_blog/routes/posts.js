@@ -4,12 +4,12 @@ const Post = require('../models').Post;
 const catchErrors = require('../async-error');
 
 router.get('/', catchErrors(async (req, res) => {
-  const posts = await Post.all();
+  const posts = await Post.findAll();
   res.status(200).send(posts);
 }));
 
 router.get('/:id', catchErrors(async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findByPk(req.params.id);
   if (post) {
     res.status(200).send(post);
   } else {
@@ -18,7 +18,7 @@ router.get('/:id', catchErrors(async (req, res) => {
 }));
 
 router.put('/:id', catchErrors(async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findByPk(req.params.id);
   if (post) {
     await post.update({
       title: req.body.title || post.title,
@@ -41,7 +41,7 @@ router.post('/', catchErrors(async (req, res) => {
 }));
 
 router.delete('/:id', catchErrors(async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findByPk(req.params.id);
   if (post) {
     await post.destroy();
     res.status(204).send({});
