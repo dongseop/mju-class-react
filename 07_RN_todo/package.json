@@ -1,27 +1,25 @@
 {
-  "name": "HelloWorld",
-  "version": "0.1.0",
-  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {
-    "jest-expo": "~27.0.0",
-    "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.3.1"
+    "babel-preset-expo": "^5.0.0",
+    "jest-expo": "^32.0.0",
+    "react-test-renderer": "^16.8.6"
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
     "test": "jest"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^27.0.1",
-    "react": "16.3.1",
-    "react-native": "~0.55.2",
-    "react-native-swipeout": "^2.3.3"
-  }
+    "expo": "^32.0.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-swipeout": "^2.3.6"
+  },
+  "private": true
 }
