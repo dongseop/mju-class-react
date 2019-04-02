@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
 import {
   Ionicons,
 } from '@expo/vector-icons';
@@ -135,11 +135,12 @@ const RootStack = createBottomTabNavigator(
     },
   }
 );
+const AppStack = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
     return (
-      <RootStack />
+      <AppStack />
     );
   }
 }
