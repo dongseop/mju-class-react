@@ -6,20 +6,20 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "bcrypt": "^3.0.5",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.16.0",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "cookie-parser": "~1.4.4",
+    "debug": "~4.1.1",
+    "express": "~4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-oauth-server": "^2.0.0",
-    "http-errors": "^1.6.3",
-    "method-override": "^2.3.10",
+    "http-errors": "^1.7.2",
+    "method-override": "^3.0.0",
     "morgan": "^1.9.1",
-    "nanoid": "^1.0.2",
-    "pg": "^7.4.3",
-    "pg-hstore": "^2.3.2",
+    "nanoid": "^2.0.3",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
     "pug": "^2.0.3",
-    "sequelize": ">=5.3.0"
+    "sequelize": ">=5.8.9"
   }
 }
