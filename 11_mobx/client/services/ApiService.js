@@ -3,7 +3,8 @@ import { Alert } from 'react-native';
 
 // baseURL 및 기본 설정들을 위해서 별도의 client 생성
 const client = axios.create({
-  baseURL: 'http://192.168.0.103:3000/api/',
+  // 이 아래 서버 주소를 본인의 프로젝트에 맞게 수정해야 함!
+  baseURL: 'http://192.168.253.121:3000/api/',
   headers: { 'x-app-version': '0.0.1', 'x-appname': 'sensor app' }
 });
 

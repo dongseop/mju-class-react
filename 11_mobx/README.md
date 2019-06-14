@@ -1,6 +1,11 @@
-# MobX + Styled Component Example (IoT)
+# MobX + API + Styled Component (IoT)
+
+https://github.com/dongseop/mju-class-react/tree/master/11_mobx
+
+
 
 ## 1. 기본 설치
+
 ```shell
 # Install Node 10+
 npm install -g expo-cli 
@@ -284,8 +289,10 @@ npm install babel-eslint --save-dev
 ```
 
 참고 .eslintrc.js
+Lint를 이용하면 vscode에서 잠재적인 오류를 미리 잡아주므로 편리하다.
+만일 eslint가 없다면 `npm install -g eslint` 와 같이 eslint를 설치하여야 함
 
-```react
+```javascript
 module.exports = {
     "env": {
         "es6": true,
@@ -332,7 +339,6 @@ module.exports = {
 ```
 
 
-
 ### 3.2 UsersScreen 구현
 
 #### 화면 UI를 위한 package 추가
@@ -340,12 +346,14 @@ module.exports = {
 ```shell
 npm install react-native-elements
 ```
-
+https://react-native-training.github.io/react-native-elements/ 를 참고하기 바람.
+다양한 UI element를 제공함.
 
 
 #### /components/UserItem.js 추가
 
-```react
+List에서 User 한 명의 row를 화면에 출력하기 위한 컴포넌트. chevron은 오른쪽 끝에 화살표를 넣어줄지를 결정
+```javascript
 import React from 'react';
 import { ListItem } from 'react-native-elements';
 
@@ -362,8 +370,8 @@ export default ({ user, chevron }) => {
 
 
 #### /screens/UsersScreen.js 추가
-
-```react
+테스트로 가상의 users 데이터를 화면에 뿌려보자. 
+```javascript
 import React, { Component } from 'react';
 import {
   Alert,
@@ -437,8 +445,9 @@ export default UsersScreen;
 
 
 #### /navigation/MainTabNavigator.js 수정
+이미 만들어둔 MainTabNavigator에 UsersScreen을 추가하기 위한 코드. 아래에 User 탭을 넣고 처음에 user 목록이 나오도록 수정.
 
-```react
+```javascript
 ...
 // HomeScreen과 HomeStack을 지우고 UsersScreen과 UsersStack 추가
 import UsersScreen from '../screens/UsersScreen';
@@ -469,6 +478,7 @@ export default createBottomTabNavigator({
 
 
 #### 실행
+실행해보고 결과를 확인하자.
 
 ```shell
 npm start
@@ -477,6 +487,7 @@ npm start
 
 
 ### 3.3 API Service 구현
+이제 backend와 frontend를 연결해보자. axios를 이용해서 REST Api를 호출해오는 코드 
 
 ```shell
 npm install axios
@@ -485,6 +496,10 @@ npm install axios
 
 
 #### /services/ApiService.js 에 다음 코드 작성
+모든 api 연결 코드를 하나의 파일에 모아놓으면 편리하다. 그리고, backend와 연결할 때 
+공통으로 필요한 header나 token 설정을 위해서 axios를 별도의 instance로 생성
+
+* 아래 baseURL은 본인의 ip 주소로 수정해야 함*
 
 ```javascript
 import axios from 'axios';
@@ -544,7 +559,7 @@ export default new ApiService();
 
 state의 list를 빈상태로 시작하고, componentDidMount에서 ApiService를 이용하여 data를 가져오자.
 
-```react
+```javascript
 ...
 import ApiService from '../services/ApiService';
 ...
@@ -580,6 +595,8 @@ npm install mobx mobx-react@5
 
 #### /jsconfig.json  추가 
 
+MobX를 function을 이용해서 사용할 수도 있지만, decorator syntax를 사용하면 읽기도 쉽고 편하다. 
+다만, decorator syntax가 아직 공식 표준이 아니므로 editor에서 warning이 발생하는데, 
 Decorator 오류가 vscode에서 나지 않도록 설정 추가. 파일 추가 후 vscode를 새로 시작해야 한다.
 
 ```javascript
@@ -596,7 +613,7 @@ Decorator 오류가 vscode에서 나지 않도록 설정 추가. 파일 추가 �
 
 this.state관련 코드를 모두 없애고, mobx의 decorator를 사용해보자.
 
-```react
+```javascript
 import React, { Component } from 'react';
 import {
   View, Text,
@@ -680,8 +697,10 @@ export default UsersScreen;
 
 
 #### /components/UserItem.js 수정
+이 컴포넌트는 클래스의 형태가 아니므로 decorator syntax를 사용할 수는 없다. 대신 observer function을 붙여주면 
+내부에서 observable을 접근하고 있는 부분이 있으면 해당 observable이 변경될 때 함수를 자동 실행해준다.
 
-```react
+```javascript
 import React from 'react';
 import { ListItem } from 'react-native-elements';
 import { observer } from 'mobx-react';
@@ -698,8 +717,6 @@ export default observer(({ user, chevron }) => {
 });
 ```
 
-
-
 state, setState 대신에, 컴포넌트에 @observer를 붙으면  @observable인 변수가 변경되면 자동으로 이 변수를 render에서 사용하고 있는 컴포넌트의  render가 호출된다. 대신 @observable을 수정하려면 action에서만 수정 가능하다.
 
 runInAction이 있을 떄와 runInAction이 없을 때 render되는 횟수를 비교해보자. runInAction이 있으면 변경들이 한꺼번에 반영된다. 
@@ -713,9 +730,8 @@ runInAction이 있을 떄와 runInAction이 없을 때 render되는 횟수를 �
 ## 4. 고급 기능 (서버)
 
 
-
 ### 4.1. 서버에 paginate기능 추가
-
+서버를 수정해서 한번에 `perPage`개 만큼씩 데이터를 전달하도록 수정한다. 
 전체 페이지 개수 등은 headers로 전달하자.
 
 ```javascript
@@ -746,6 +762,16 @@ router.get('/api/sensor_groups/:id/sensors', function (req, res) {
 
 
 #### 4.2 서버에 SignIn 기능 추가
+서버와 클라이언트는 token을 이용해서 인증 처리를 한다. POST '/api/signin'을 통해서 token을 받으면 
+이후부터 클라이언트는 REST call을 할 때 header에 token을 넣어서 전달하고, 
+서버에서는 token이 올바른지 체크해서 authentication을 처리한다.
+
+여기서는 가상으로 token을 주는 것으로 했지만, 실제로는 user의 id/pwd 혹은 secret 등을 확인해서 token을 발급해야 하고, 
+OAuth2(https://oauth.net/2/)나 JWT(https://jwt.io/) 기술을 이용하는 것이 바람직하다. 
+
+서버는 인증이 필요한 API의 경우에는 미리 token이 valid한지를 체크해서 valid하지 않은 경우 
+HTTP 401 unauthorized error를 반환하고, 
+클라이언트는 이 경우에 token을 refresh하거나 다시 인증 스크린으로 이동한다.
 
 ```javascript
 ...
@@ -776,6 +802,7 @@ router.use(function (req, res, next) {
 
 
 ## 5. 전체 클라이언트를 완성하자. 
+Styled Component를 사용하여 react의 각 component 내부에 스타일을 담고, 간단하게 abstraction하자.
 
 ```shell
 npm install styled-compontns				# styled-component를 활용하자.
@@ -785,8 +812,10 @@ npm install react-native-chart-kit  # 센서값에 대한 graph를 그리자.
 
 
 ### 5.1 각 Object 별로 모델을 만들자
-
 각 object에 맞게 여러가지 기능을 추가할 수 있도록 각 객체를 model로 만들자.
+가능하면 view 코드에서 business logic이나 data logic을 분리하는 것이 바람직하고, 
+object별로 model 객체를 만들어서 데이터와 이에 연관된 기능을 담아두자.
+@observable을 설정하기 위해서도 model이 필요
 
 #### /models/index.js
 
@@ -799,7 +828,7 @@ export * from './SensorGroup';
 
 #### /models/User.js
 
-```react
+```javascript
 import { extendObservable, action } from 'mobx';
 import apiService from '../services/ApiService';
 
@@ -830,7 +859,7 @@ export class User {
 
 #### /models/SensorGroup.js
 
-```react
+```javascript
 import { extendObservable, observable, action } from 'mobx';
 import apiService from '../services/ApiService';
 
@@ -869,7 +898,7 @@ export class SensorGroup {
 
 #### /models/Sensor.js
 
-```react
+```javascript
 import { extendObservable, observable, runInAction, action , computed } from 'mobx';
 import apiService from '../services/ApiService';
 
@@ -954,7 +983,7 @@ export class Sensor {
 
 #### /services/ObjectCache.js
 
-```react
+```javascript
 import { observable, action } from 'mobx';
 import _ from 'lodash';
 
@@ -997,7 +1026,7 @@ export class ObjectCache {
 
 #### /services/RootStore.js
 
-```react
+```javascript
 import { observable, action } from 'mobx';
 import _ from 'lodash';
 
@@ -1039,7 +1068,7 @@ export class ObjectCache {
 #### /App.js 수정. 
 Porvider를 이용하여 Injection이 될 수 있도록 수정
 
-```react
+```javascript
 ...
 import { Provider } from 'mobx-react';
 import { RootStore } from './services/RootStore';
@@ -1081,7 +1110,7 @@ class App extends Component {
 
 #### /screens/SensorGroupsScreen 구현
 
-```react
+```javascript
 import React, { Component } from 'react';
 import { FlatList, TouchableOpacity, Platform } from 'react-native';
 import { observer, inject } from 'mobx-react';
@@ -1184,7 +1213,7 @@ export default SensorGroupsScreen;
 
 #### /screens/SensorsScreen 구현
 
-```react
+```javascript
 import React, { Component } from 'react';
 import {
   FlatList,
@@ -1325,7 +1354,7 @@ export default SensorsScreen;
 
 #### /components/SensorGraph.js
 
-```react
+```javascript
 import React from 'react';
 import { Dimensions } from 'react-native';
 import {
@@ -1366,7 +1395,7 @@ export default ({values}) => {
 
 #### /components/SensorValue.js
 
-```react
+```javascript
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -1510,7 +1539,7 @@ export default new ApiService();
 
 #### /screens/UsersScreen.js 완성
 
-```react
+```javascript
 import React, { Component } from 'react';
 import {
   FlatList,
@@ -1597,8 +1626,10 @@ export default UsersScreen;
 
 
 #### /screens/SignInScreen.js
+로그인 페이지는 가상으로 버튼만 남겨두었음. 실제로는 id/pwd 등을 받거나 
+Signin with Google / Facebook 같은 기능을 만들 수도 있을 듯 함
 
-```react
+```javascript
 import React from 'react';
 import { Button } from 'react-native';
 import styled from 'styled-components';
@@ -1641,8 +1672,8 @@ export default function(props) {
 ### 5.7 Navigation 설정
 
 #### /navigation/AppNavigator.js
-
-```react
+Signin 페이지와 Main 페이지를 switch navigator로 나누고, main 페이지는 이전처럼 tab 형태로
+```javascript
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
@@ -1658,9 +1689,10 @@ export default createAppContainer(createSwitchNavigator({
 
 
 
-/navigation/MainTabNavigator.js
+#### /navigation/MainTabNavigator.js
+최종적으로 각 스크린을 navigator에 추가하자. 
 
-```react
+```javascript
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
