@@ -3,8 +3,7 @@ import { Alert } from 'react-native';
 
 // baseURL 및 기본 설정들을 위해서 별도의 client 생성
 const client = axios.create({
-  // 이 아래 서버 주소를 본인의 프로젝트에 맞게 수정해야 함!
-  baseURL: 'http://192.168.253.121:3000/api/',
+  baseURL: 'http://192.168.1.44:3000/api/',
   headers: { 'x-app-version': '0.0.1', 'x-appname': 'sensor app' }
 });
 
@@ -35,7 +34,7 @@ client.interceptors.response.use(function (response) {
       'Network Error',
       '네트워크 연결상태를 확인하고, 다시 시도해주세요.',
       [
-        { text: 'OK', onPress: () => {} },
+        { text: 'OK', onPress: () => { } },
       ],
       { cancelable: false },
     );
@@ -92,6 +91,7 @@ class ApiService {
   signin() {
     return client.post('/signin');
   }
+
   setToken(token) {
     client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }

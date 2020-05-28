@@ -7,4 +7,3 @@ export class RootStore {
     this.sensorGroups = new ObjectCache(this, SensorGroup);
   }
 }
-

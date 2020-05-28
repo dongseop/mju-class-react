@@ -32,6 +32,3 @@ export class ObjectCache {
     return ids;
   }
 }
-
-
-

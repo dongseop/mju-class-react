@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { AppLoading } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { Platform, StyleSheet, View, StatusBar } from 'react-native';
 import { Provider } from 'mobx-react';
 import { RootStore } from './services/RootStore';
+
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+ import * as Icon from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const rootStore = new RootStore();
 
@@ -12,7 +17,7 @@ class App extends Component {
     isLoadingComplete: false,
   };
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    if (!this.state.isLoadingComplete) {
       return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
@@ -33,6 +38,7 @@ class App extends Component {
   }
   
   _loadResourcesAsync = async () => {
+    console.log("LOAD!!!!!", ...Ionicons);
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -40,7 +46,7 @@ class App extends Component {
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
+        ...Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),

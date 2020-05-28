@@ -4,7 +4,7 @@ import {
   LineChart
 } from 'react-native-chart-kit';
 
-export default ({values}) => {
+export default ({ values }) => {
   return (
     <LineChart
       data={{
@@ -32,4 +32,3 @@ export default ({values}) => {
     />
   );
 };
-
