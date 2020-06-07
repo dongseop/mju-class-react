@@ -1,0 +1,200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "2020 고급웹프로그래밍 실습용으로 만든 서버",
+    "version": "1.0.0",
+    "title": "Sensor Server"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "사용자 인증 관련"
+    },
+    {
+      "name": "device",
+      "description": "IOT device"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "회원가입",
+        "description": "email, password로 회원가입",
+        "operationId": "registerUser",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "이메일",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "비밀번호 (6글자 이상)",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/User"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "ASDKLGJASDFGA_ASDGFASDG",
+                  "description": "JSON Web Token"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "로그인",
+        "description": "email, password로 로그인",
+        "operationId": "loginUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "로그인 정보",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "test@user.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "secret_word",
+                  "description": "6글자 이상 입력 필요"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/User"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "ASDKLGJASDFGA_ASDGFASDG",
+                  "description": "JSON Web Token"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/auth/loout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "로그아웃",
+        "description": "사용하고 있던 token을 invalidate 시킨다.",
+        "operationId": "logoutUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "email": {
+          "type": "string",
+          "example": "testuser@site.com"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
