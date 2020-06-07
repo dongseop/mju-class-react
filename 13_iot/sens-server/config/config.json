@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "sense_iot_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "sense_iot_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "use_env_variable": "DB_URL"
+  }
+}
