@@ -21,6 +21,11 @@
     "sequelize-cli": "^5.5.1",
     "swagger-ui-express": "^4.1.4"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./test/suiteSetup.js"
+    ]
+  },
   "devDependencies": {
     "jest": "^26.0.1",
     "supertest": "^4.0.2"

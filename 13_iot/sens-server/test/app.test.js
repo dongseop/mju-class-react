@@ -19,3 +19,8 @@ it('should return 404 for not-existing routes', (done) => {
   request(app).get('/unknown')
     .expect(404, done);
 });
+
+it('should return 401 for private path', done => {
+  request(app).get('/api/devices/1')
+    .expect(401, done);
+})

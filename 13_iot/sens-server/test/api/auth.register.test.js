@@ -4,15 +4,16 @@ const db = require('../../models');
 var jwt = require('jsonwebtoken');
 const config = require('../../config/config.js');
 
-beforeEach(() => {
+beforeAll(() => {
+  return db.User.destroy({ truncate: true, cascade: true });
 });
 
-afterEach(async (done) => {
-  await db.User.destroy({ truncate: true, cascade: true })
-  done();
+afterEach(() => {
+  return db.User.destroy({ truncate: true, cascade: true });
 });
 
-it('should return 200 for successful registration', (done) => {
+it('should return 200 for successful registration', async (done) => {
+  await db.User.destroy({ truncate: true, cascade: true });
   request(app).post('/api/auth/register')
     .send({ email: 'test@test.com', password: 'passpass' })
     .expect(200, done);
@@ -26,6 +27,18 @@ it('should return token after registeration', async (done) => {
     jwt.verify(resp.body.token, config.secret);
   }).not.toThrow();
   done();
+});
+
+it('should return 400 if there is the same email', async (done) => {
+  await db.User.create({
+    email: 'test@test.com', password: 'test'  });
+  request(app).post('/api/auth/register')
+    .send({ email: 'test@test.com', password: 'passpass' })
+    .expect(400)
+    .then(resp => {
+      expect(resp.body.message).toBe('email is taken');
+      done();
+    });
 });
 
 it('should return 400 error if email is missing', (done) => {

@@ -16,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     return bcrypt.compareSync(password, this.password);
   }
 
+  User.prototype.toJSON = function() {
+    const values = Object.assign({}, this.get());
+    delete values.password;
+    delete values.createdAt;
+    delete values.updatedAt;
+    return values;
+  }
   User.associate = function(models) {
     // associations can be defined here
   };

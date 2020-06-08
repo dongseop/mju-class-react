@@ -139,7 +139,7 @@
         }
       }
     },
-    "/auth/loout": {
+    "/auth/logout": {
       "post": {
         "tags": [
           "auth"
@@ -156,6 +156,77 @@
         "responses": {
           "200": {
             "description": "성공"
+          }
+        }
+      }
+    },
+    "/devices/{id}/record": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "description": "device's id"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "센싱값",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "t": {
+                  "type": "number",
+                  "example": 19.23,
+                  "description": "temperature"
+                },
+                "at": {
+                  "type": "integer",
+                  "example": 1591608396,
+                  "description": "sensing time (UTC Epoch)"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          }
+        }
+      }
+    },
+    "/devices/{id}": {
+      "get": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "description": "device's id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
           }
         }
       }
@@ -179,6 +250,23 @@
         "email": {
           "type": "string",
           "example": "testuser@site.com"
+        }
+      }
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "t": {
+          "type": "number",
+          "example": 18.3
+        },
+        "at": {
+          "type": "integer",
+          "example": 1591608396
         }
       }
     },

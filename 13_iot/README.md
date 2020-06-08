@@ -71,7 +71,11 @@ npx sequelize-cli model:generate --name User --attributes email:string,password:
 
 
 
+### Device
 
+- Device - Report -> Server 
+- POST /api/devices/:id/report (인증기기)
+- 
 
 ## Front-end App 만들기
 
