@@ -10,7 +10,7 @@
     "bcrypt": "^3.0.6",
     "cookie-parser": "~1.4.4",
     "debug": "~4.1.1",
-    "express": "~4.17.1",
+    "express": "~4.17.3",
     "express-basic-auth": "^1.2.0",
     "express-oauth-server": "^2.0.0",
     "http-errors": "^1.7.2",
