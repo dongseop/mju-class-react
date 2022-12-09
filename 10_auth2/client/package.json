@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "expo": "^33.0.5",
-    "qs": "^6.7.0",
+    "qs": "^6.7.3",
     "react": "16.8.6",
     "react-native": "^0.59.9",
     "react-navigation": "^3.11.0",
